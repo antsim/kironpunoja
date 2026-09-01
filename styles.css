@@ -1,0 +1,553 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   KIRONPUNOJA
+   Mortuary minimalism — flat gallery-black, bone type, sulphur used sparingly.
+   Three tones. Two typefaces. No gradients, no cards, no symmetry.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* ── Tones. Exactly three, plus derived opacities. ────────────────── */
+  --ink:        #0A0A0B;   /* ground — flat, slightly cool near-black     */
+  --bone:       #E8E2D4;   /* type — warm bone white, never pure #FFF     */
+  --sulphur:    #C7BC3E;   /* accent — acid, sickly. Used 4× on the page. */
+
+  --bone-70:   rgb(232 226 212 / .72);   /* body copy        ~8.9:1 */
+  --bone-45:   rgb(232 226 212 / .58);   /* secondary copy   ~5.4:1 */
+  --bone-28:   rgb(232 226 212 / .46);   /* micro-labels     ~4.6:1 */
+  --bone-decor:rgb(232 226 212 / .26);   /* aria-hidden only        */
+  --rule:      rgb(232 226 212 / .13);   /* hairlines               */
+
+  /* ── Type ─────────────────────────────────────────────────────────── */
+  --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --sans:    "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  /* ── Rhythm ───────────────────────────────────────────────────────── */
+  --gutter: clamp(1.25rem, 5vw, 5.5rem);
+  --stack:  clamp(6rem, 16vh, 12rem);
+
+  /* ── Motion. Restrained: one easing curve, used everywhere. ───────── */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --dur:  .9s;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  background:var(--ink);
+  overflow-x:clip;
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--bone);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:clamp(1rem, .93rem + .32vw, 1.15rem);
+  line-height:1.65;
+  letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  /* clip, not hidden: `hidden` would make body a scroll container and
+     silently break the sticky rail in .story__rail */
+  overflow-x:clip;
+}
+
+::selection{ background:var(--sulphur); color:var(--ink); }
+
+:focus-visible{
+  outline:1px solid var(--sulphur);
+  outline-offset:4px;
+}
+
+img,svg{ max-width:100%; display:block; }
+
+h1,h2,h3,p,dl,dd,blockquote,figure,ol,ul{ margin:0; padding:0; }
+ol,ul{ list-style:none; }
+
+a{ color:inherit; text-decoration:none; }
+
+.visually-hidden{
+  position:absolute; width:1px; height:1px;
+  margin:-1px; padding:0; overflow:hidden;
+  clip-path:inset(50%); white-space:nowrap;
+}
+
+.skip{
+  position:absolute; left:var(--gutter); top:-100px; z-index:99;
+  padding:.7rem 1.1rem; background:var(--sulphur); color:var(--ink);
+  font-size:.8rem; letter-spacing:.08em; text-transform:uppercase;
+  transition:top .3s var(--ease);
+}
+.skip:focus{ top:1rem; }
+
+
+/* ═══ FILM GRAIN ══════════════════════════════════════════════════════
+   Fixed overlay. Keeps the flat black from reading as dead digital void. */
+.grain{
+  position:fixed; inset:0;
+  z-index:60; pointer-events:none;
+  opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+  animation:grain 6s steps(1) infinite;
+}
+@keyframes grain{
+  0%  { background-position:0 0 }
+  20% { background-position:-40px 22px }
+  40% { background-position:28px -34px }
+  60% { background-position:-22px -18px }
+  80% { background-position:36px 30px }
+  100%{ background-position:0 0 }
+}
+
+
+/* ═══ MASTHEAD ════════════════════════════════════════════════════════
+   Hidden over the hero; slides in once the wordmark has scrolled away. */
+.masthead{
+  position:fixed; inset:0 0 auto 0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:2rem;
+  padding:1.1rem var(--gutter);
+  background:color-mix(in srgb, var(--ink) 86%, transparent);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transform:translateY(-101%);
+  transition:transform .7s var(--ease), border-color .7s var(--ease);
+}
+.masthead.is-visible{
+  transform:translateY(0);
+  border-bottom-color:var(--rule);
+}
+.masthead__mark{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:1.05rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.masthead__nav{ display:flex; gap:clamp(1.25rem,3vw,2.75rem); }
+.masthead__nav a{
+  position:relative;
+  font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--bone-45);
+  transition:color .4s var(--ease);
+}
+.masthead__nav a::after{
+  content:""; position:absolute; left:0; bottom:-5px;
+  width:100%; height:1px; background:currentColor;
+  transform:scaleX(0); transform-origin:right;
+  transition:transform .5s var(--ease);
+}
+.masthead__nav a:hover{ color:var(--bone); }
+.masthead__nav a:hover::after{ transform:scaleX(1); transform-origin:left; }
+@media (max-width:640px){ .masthead__nav a:nth-child(2){ display:none; } }
+
+
+/* ═══ MASK-REVEAL PRIMITIVES ══════════════════════════════════════════ */
+.line{
+  display:inline-block;
+  overflow:hidden;
+  vertical-align:top;
+  /* Bleed so descenders (j, p, y) are not sheared by the mask. */
+  padding-bottom:.14em;
+  margin-bottom:-.14em;
+}
+.unit{
+  display:inline-block;
+  transform:translateY(108%);
+  transition:transform 1.05s var(--ease);
+  transition-delay:calc(var(--i, 0) * .035s);
+}
+.is-in .unit{ transform:translateY(0); }
+
+/* Gated on .js — if the script never runs, everything stays visible. */
+.js [data-reveal]{
+  opacity:0;
+  transform:translateY(1.35rem);
+  transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.js [data-reveal].is-in{ opacity:1; transform:none; }
+
+
+/* ═══ HERO ════════════════════════════════════════════════════════════
+   Asymmetric: wordmark hangs left off a wide column, the statement sits
+   bottom-right, the specimen tag rules the floor. Nothing is centred. */
+.hero{
+  position:relative;
+  min-height:100svh;
+  padding:calc(var(--gutter) + 3rem) var(--gutter) 1.75rem;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-template-rows:1fr auto auto;
+  column-gap:clamp(1rem,2.5vw,2rem);
+  align-content:end;
+}
+
+.hero__mark{
+  grid-column:1 / 12;
+  grid-row:1;
+  align-self:center;
+  margin-block:clamp(2rem,8vh,5rem) clamp(1.5rem,5vh,3rem);
+}
+
+/* Live-text wordmark. Fallback until the band's SVG is dropped in. */
+.wordmark{
+  font-family:var(--display);
+  font-variation-settings:"opsz" 96;
+  font-weight:900;
+  /* Conservative no-JS fallback. main.js overrides this with a measured
+     size so the wordmark sits flush to its column on every viewport. */
+  font-size:clamp(2.4rem, 10vw, 11rem);
+  line-height:.82;
+  letter-spacing:-.025em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+/* Per-character rise. Set up in main.js. */
+.wordmark .unit{ transition-duration:1.25s; }
+
+/* Styles the dropped-in SVG logo, if one is used instead. */
+.hero__mark .logo{ width:min(100%, 78rem); color:var(--bone); }
+.hero__mark .logo svg{ width:100%; height:auto; }
+
+.hero__say{
+  grid-column:6 / 13;
+  grid-row:2;
+  margin-bottom:clamp(3rem,9vh,6.5rem);
+}
+@media (max-width:900px){ .hero__say{ grid-column:1 / 13; } }
+
+.hero__lede{
+  font-family:var(--display);
+  font-variation-settings:"opsz" 40;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(1.5rem, 3.4vw, 2.6rem);
+  line-height:1.15;
+  letter-spacing:-.01em;
+  margin-bottom:1.1rem;
+}
+.hero__prop{
+  max-width:38ch;
+  color:var(--bone-45);
+  font-size:.95rem;
+  line-height:1.7;
+}
+
+/* ── Specimen tag ─────────────────────────────────────────────────── */
+.tag{
+  grid-column:1 / 13;
+  grid-row:3;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+  padding-top:1rem;
+  border-top:1px solid var(--rule);
+  transition-delay:.5s;
+}
+.tag__cell dt{
+  font-size:.62rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--bone-28);
+  margin-bottom:.4rem;
+}
+.tag__cell dd{
+  font-size:.82rem; letter-spacing:.05em;
+  color:var(--bone-70);
+}
+.tag__cell--end{ text-align:right; }
+/* ACCENT 1 of 4 */
+.live{ color:var(--sulphur); }
+.live::before{
+  content:""; display:inline-block;
+  width:5px; height:5px; margin-right:.55em;
+  background:var(--sulphur); border-radius:50%;
+  vertical-align:middle;
+  animation:pulse 3.4s var(--ease) infinite;
+}
+@keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.25} }
+
+@media (max-width:700px){
+  .tag{ grid-template-columns:repeat(2,1fr); row-gap:1.5rem; }
+  .tag__cell--end{ text-align:left; }
+}
+
+.hero__scroll{
+  position:absolute; right:var(--gutter); bottom:6.5rem;
+  display:flex; flex-direction:column; align-items:center; gap:.75rem;
+  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--bone-decor);
+}
+.hero__scroll i{
+  width:1px; height:clamp(2.5rem,7vh,4.5rem);
+  background:var(--bone-decor);
+  transform-origin:top;
+  animation:drip 2.8s var(--ease) infinite;
+}
+@keyframes drip{
+  0%   { transform:scaleY(0);   opacity:0 }
+  35%  { transform:scaleY(1);   opacity:1 }
+  100% { transform:scaleY(1);   opacity:0; transform-origin:bottom }
+}
+@media (max-width:900px){ .hero__scroll{ display:none; } }
+
+
+/* ═══ SECTION MARKER ══════════════════════════════════════════════════ */
+.marker{
+  font-size:.66rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--bone-28);
+}
+.marker::before{
+  content:"";
+  display:inline-block;
+  width:1.6rem; height:1px;
+  margin-right:.9em;
+  vertical-align:middle;
+  background:var(--bone-28);
+}
+
+
+/* ═══ TARINA ══════════════════════════════════════════════════════════
+   Two unequal columns. A narrow sticky rail against a wide text block
+   that stops well short of the right edge — the whitespace is the design. */
+.story{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  column-gap:clamp(1rem,2.5vw,2rem);
+  padding:var(--stack) var(--gutter);
+  border-top:1px solid var(--rule);
+}
+.story__rail{ grid-column:1 / 3; }
+.story__rail .marker{ position:sticky; top:6rem; }
+.story__body{ grid-column:4 / 11; }
+
+@media (max-width:900px){
+  .story__rail{ grid-column:1 / 13; margin-bottom:2.5rem; }
+  .story__rail .marker{ position:static; }
+  .story__body{ grid-column:1 / 13; }
+}
+
+.story__head{
+  font-family:var(--display);
+  font-variation-settings:"opsz" 72;
+  font-weight:400;
+  font-size:clamp(2.1rem, 5.2vw, 4.6rem);
+  line-height:1.02;
+  letter-spacing:-.022em;
+  text-wrap:balance;
+  margin-bottom:clamp(2.5rem,6vh,4rem);
+  max-width:16ch;
+}
+
+.story__body p{
+  max-width:54ch;
+  color:var(--bone-70);
+  margin-bottom:1.6rem;
+}
+.story__open{
+  font-size:clamp(1.15rem,1.9vw,1.4rem) !important;
+  line-height:1.55;
+  color:var(--bone) !important;
+  font-weight:300;
+}
+/* Reveal cascade — each paragraph a beat behind the last. */
+.story__body p:nth-of-type(2){ transition-delay:.1s; }
+.story__body p:nth-of-type(3){ transition-delay:.2s; }
+
+/* Pull-quote breaks the text column and hangs into the left rail. */
+.pull{
+  margin:clamp(3.5rem,9vh,6rem) 0 0 clamp(-6rem,-8vw,-1rem);
+  font-family:var(--display);
+  font-variation-settings:"opsz" 96;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(1.75rem, 4.4vw, 3.9rem);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  max-width:18ch;
+  text-wrap:balance;
+}
+@media (max-width:900px){ .pull{ margin-left:0; } }
+
+
+/* ═══ MANIFESTI ═══════════════════════════════════════════════════════
+   Three items, each landing in a different column. Deliberately not a grid
+   of equal cards — the eye walks down a staircase. */
+.creed{
+  padding:var(--stack) var(--gutter);
+  border-top:1px solid var(--rule);
+}
+.creed__marker{ margin-bottom:clamp(3rem,8vh,5.5rem); }
+
+.creed__list{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  column-gap:clamp(1rem,2.5vw,2rem);
+  row-gap:clamp(4rem,11vh,8rem);
+}
+.creed__item{ position:relative; padding-top:1.6rem; border-top:1px solid var(--rule); }
+.creed__item--a{ grid-column:1 / 6;  }
+.creed__item--b{ grid-column:6 / 11; }
+.creed__item--c{ grid-column:3 / 8;  }
+.creed__item--b{ transition-delay:.09s; }
+.creed__item--c{ transition-delay:.18s; }
+
+@media (max-width:900px){
+  .creed__item--a,.creed__item--b,.creed__item--c{ grid-column:1 / 13; }
+}
+
+.creed__num{
+  display:block;
+  font-family:var(--display);
+  font-variation-settings:"opsz" 96;
+  /* Bodoni's roman capital I is a bare rectangle at every weight, so
+     I / II / III read as tally marks. The italic carries calligraphic
+     serifs that make them unmistakably numerals — and it rhymes with the
+     italic figures in the section markers. */
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(2.9rem,6.4vw,5rem);
+  line-height:1;
+  letter-spacing:.06em;
+  color:var(--bone-28);
+  margin-bottom:1.4rem;
+  transition:color .6s var(--ease), opacity .6s var(--ease);
+}
+/* ACCENT 2 of 4 — the numeral warms through on hover. */
+.creed__item:hover .creed__num,
+.creed__item:focus-within .creed__num{ color:var(--sulphur); }
+
+.creed__title{
+  font-family:var(--display);
+  font-variation-settings:"opsz" 48;
+  font-weight:700;
+  font-size:clamp(1.35rem,2.4vw,1.9rem);
+  line-height:1.1;
+  letter-spacing:-.012em;
+  margin-bottom:.9rem;
+}
+.creed__text{
+  color:var(--bone-45);
+  font-size:.94rem;
+  line-height:1.72;
+  max-width:38ch;
+}
+
+
+/* ═══ KINETIC DIVIDER ═════════════════════════════════════════════════ */
+.ticker{
+  overflow:hidden;
+  padding:1.4rem 0;
+  border-block:1px solid var(--rule);
+  white-space:nowrap;
+}
+.ticker__track{
+  display:inline-flex; align-items:center; gap:2.5rem;
+  animation:slide 64s linear infinite;   /* slow enough to read as texture */
+  will-change:transform;
+}
+.ticker__track span{
+  font-size:.68rem; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--bone-decor);
+}
+/* ACCENT 3 of 4 */
+.ticker__track i{ font-style:normal; font-size:.5rem; color:var(--sulphur); }
+@keyframes slide{ to{ transform:translateX(-50%) } }
+
+
+/* ═══ YHTEYS ══════════════════════════════════════════════════════════ */
+.call{
+  padding:var(--stack) var(--gutter) clamp(5rem,12vh,8rem);
+}
+.call .marker{ margin-bottom:clamp(2rem,5vh,3rem); }
+
+.call__head{
+  font-family:var(--display);
+  font-variation-settings:"opsz" 72;
+  font-weight:400;
+  font-size:clamp(1.9rem,4.6vw,4rem);
+  line-height:1.04;
+  letter-spacing:-.022em;
+  margin-bottom:clamp(2.5rem,7vh,4.5rem);
+  max-width:14ch;
+}
+
+/* The conversion moment: the address itself is the button. */
+.call__mail{
+  display:inline-block;
+  position:relative;
+  font-family:var(--display);
+  font-variation-settings:"opsz" 96;
+  font-weight:400;
+  font-size:clamp(1.4rem, 6.4vw, 5.4rem);
+  line-height:1.05;
+  letter-spacing:-.03em;
+  word-break:break-word;
+  transition:color .55s var(--ease);
+}
+.call__mail::after{
+  content:""; position:absolute; left:0; bottom:.08em;
+  width:100%; height:1px; background:currentColor;
+  transform:scaleX(0); transform-origin:right;
+  transition:transform .75s var(--ease);
+}
+/* ACCENT 4 of 4 — the only saturated moment on the page. */
+.call__mail:hover,
+.call__mail:focus-visible{ color:var(--sulphur); }
+.call__mail:hover::after,
+.call__mail:focus-visible::after{ transform:scaleX(1); transform-origin:left; }
+
+.call__note{
+  margin-top:clamp(2rem,5vh,3rem);
+  max-width:34ch;
+  color:var(--bone-28);
+  font-size:.86rem;
+}
+
+
+/* ═══ COLOPHON ════════════════════════════════════════════════════════ */
+.colophon{
+  display:flex; flex-wrap:wrap; align-items:baseline;
+  justify-content:space-between; gap:2rem;
+  padding:1.6rem var(--gutter) 2.2rem;
+  border-top:1px solid var(--rule);
+}
+.colophon__links{ display:flex; flex-wrap:wrap; gap:clamp(1rem,2.5vw,2.25rem); }
+.colophon__links a{
+  position:relative;
+  font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--bone-45);
+  transition:color .45s var(--ease);
+}
+.colophon__links a::after{
+  content:""; position:absolute; left:0; bottom:-4px;
+  width:100%; height:1px; background:currentColor;
+  transform:scaleX(0); transform-origin:right;
+  transition:transform .5s var(--ease);
+}
+.colophon__links a:hover{ color:var(--bone); }
+.colophon__links a:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+.colophon__meta{
+  display:flex; flex-wrap:wrap; gap:1.5rem;
+  font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--bone-28);
+}
+
+
+/* ═══ REDUCED MOTION ══════════════════════════════════════════════════
+   Everything arrives, nothing moves. */
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .grain{ animation:none; }
+  .ticker__track{ animation:none; }
+  .unit{ transform:none !important; }
+  .js [data-reveal]{ opacity:1 !important; transform:none !important; }
+  .masthead{ transform:translateY(0); border-bottom-color:var(--rule); }
+}

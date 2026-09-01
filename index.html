@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KIRONPUNOJA — Vanhan koulun kuolemanmetallia</title>
+<meta name="description" content="KIRONPUNOJA. Vanhan koulun kuolemanmetallia Suomesta. Hitaasti punottu kirous.">
+<meta name="theme-color" content="#0A0A0B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0B'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C7BC3E'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="KIRONPUNOJA">
+<meta property="og:description" content="Vanhan koulun kuolemanmetallia Suomesta. Hitaasti punottu kirous.">
+<meta property="og:locale" content="fi_FI">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700;6..96,900&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Film grain. Fixed, non-interactive, disabled under prefers-reduced-motion. -->
+<div class="grain" aria-hidden="true"></div>
+
+<a class="skip" href="#tarina">Siirry sisältöön</a>
+
+<header class="masthead" id="masthead">
+  <a class="masthead__mark" href="#top" aria-label="Kironpunoja — alkuun">Kironpunoja</a>
+  <nav class="masthead__nav" aria-label="Sivuston osiot">
+    <a href="#tarina">Tarina</a>
+    <a href="#manifesti">Manifesti</a>
+    <a href="#yhteys">Yhteys</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="wordmark">
+
+    <div class="hero__mark">
+      <!--
+        LOGO SLOT
+        ─────────
+        Paste the band's SVG logo directly inside the <div class="logo"> below,
+        then delete the <h1 class="wordmark"> element.
+        The SVG should have  fill="currentColor"  and no fixed width/height —
+        styles.css already scales it and inherits the bone colour.
+
+        <div class="logo"> …your <svg> here… </div>
+      -->
+      <h1 class="wordmark" id="wordmark" data-split="chars">Kironpunoja</h1>
+    </div>
+
+    <div class="hero__say">
+      <p class="hero__lede" data-split="words">Hitaasti punottu kirous.</p>
+      <p class="hero__prop" data-reveal>Vanhan koulun kuolemanmetallia Suomesta. Ei kiirettä, ei korjauksia, ei kompromisseja.</p>
+    </div>
+
+    <!-- Specimen tag: a mortuary register row, not a stat grid. -->
+    <dl class="tag" data-reveal>
+      <div class="tag__cell"><dt>Perustettu</dt><dd>MMXIX</dd></div>
+      <div class="tag__cell"><dt>Kotipaikka</dt><dd>Tampere, Suomi</dd></div>
+      <div class="tag__cell"><dt>Tyylilaji</dt><dd>Kuolemanmetalli</dd></div>
+      <div class="tag__cell tag__cell--end"><dt>Tila</dt><dd><span class="live">Aktiivinen</span></dd></div>
+    </dl>
+
+    <div class="hero__scroll" aria-hidden="true"><span>Vieritä</span><i></i></div>
+  </section>
+
+
+  <!-- ══ TARINA ════════════════════════════════════════════════════════ -->
+  <section class="story" id="tarina" aria-labelledby="tarina-otsikko">
+
+    <div class="story__rail">
+      <p class="marker" data-reveal>Tarina</p>
+    </div>
+
+    <div class="story__body">
+      <h2 class="story__head" id="tarina-otsikko" data-split="words">Kaikki mikä maatuu, palaa takaisin.</h2>
+
+      <!-- ═══ PLACEHOLDER COPY — replace with the band's real history ═══ -->
+      <p class="story__open" data-reveal>Kironpunoja syntyi treenikämpän kosteudessa, kaukana valokeilasta. Kaksi kitaraa, yksi vahvistin ja yksi ajatus: soittaa niin kuin soitettiin ennen kuin kaikki hiottiin sileäksi.</p>
+      <p data-reveal>Nauhat vedetään kokonaisina otoksina. Rummut soivat huoneessa, eivät ruudulla. Se mikä menee pieleen, jää nauhalle — koska juuri siinä kohdassa musiikki hengittää. Emme etsi täydellisyyttä, vaan sitä hetkeä jolloin riffi alkaa kuulostaa vanhemmalta kuin me.</p>
+      <p data-reveal>Nimi tarkoittaa sitä miltä se kuulostaa. Kirous ei ole huuto. Se punotaan hitaasti, säie kerrallaan, ja se kestää kauemmin kuin punoja itse.</p>
+      <!-- ═══ /PLACEHOLDER ══════════════════════════════════════════════ -->
+
+      <blockquote class="pull" data-split="words">Mikään ei kuole kokonaan. Se vain vaihtaa muotoa.</blockquote>
+    </div>
+  </section>
+
+
+  <!-- ══ MANIFESTI ═════════════════════════════════════════════════════ -->
+  <section class="creed" id="manifesti" aria-labelledby="manifesti-otsikko">
+    <p class="marker creed__marker" data-reveal>Manifesti</p>
+    <h2 class="visually-hidden" id="manifesti-otsikko">Manifesti</h2>
+
+    <ol class="creed__list">
+      <li class="creed__item creed__item--a" data-reveal>
+        <span class="creed__num" aria-hidden="true">I.</span>
+        <h3 class="creed__title">Raaka ääni</h3>
+        <p class="creed__text">Nauhoitettu kokonaisena, ilman korjauksia. Virheet jäävät kuuluviin, koska ne ovat todiste siitä että huoneessa oli ihmisiä.</p>
+      </li>
+      <li class="creed__item creed__item--b" data-reveal>
+        <span class="creed__num" aria-hidden="true">II.</span>
+        <h3 class="creed__title">Hidas kirous</h3>
+        <p class="creed__text">Riffi saa kestää. Kiirettä ei ole. Se mikä toistuu tarpeeksi kauan, lakkaa olemasta musiikkia ja muuttuu maisemaksi.</p>
+      </li>
+      <li class="creed__item creed__item--c" data-reveal>
+        <span class="creed__num" aria-hidden="true">III.</span>
+        <h3 class="creed__title">Maan alla</h3>
+        <p class="creed__text">Ei muotivirtauksia, ei kohderyhmiä. Underground ei ole tyylilaji vaan osoite, ja me asumme siellä.</p>
+      </li>
+    </ol>
+  </section>
+
+
+  <!-- ══ KINETIC DIVIDER ═══════════════════════════════════════════════ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>Kironpunoja</span><i>✦</i><span>Vanhan koulun kuolemanmetallia</span><i>✦</i><span>Hitaasti punottu kirous</span><i>✦</i>
+      <span>Kironpunoja</span><i>✦</i><span>Vanhan koulun kuolemanmetallia</span><i>✦</i><span>Hitaasti punottu kirous</span><i>✦</i>
+    </div>
+  </div>
+
+
+  <!-- ══ YHTEYS ════════════════════════════════════════════════════════ -->
+  <section class="call" id="yhteys" aria-labelledby="yhteys-otsikko">
+    <p class="marker" data-reveal>Yhteys</p>
+    <h2 class="call__head" id="yhteys-otsikko" data-split="words">Varaukset ja tiedustelut.</h2>
+
+    <!-- ═══ PLACEHOLDER — replace with the band's real address ═══ -->
+    <a class="call__mail" href="mailto:varaukset@kironpunoja.fi" data-reveal>
+      <span class="call__mail-text">varaukset@kironpunoja.fi</span>
+    </a>
+    <!-- ═══ /PLACEHOLDER ═════════════════════════════════════════ -->
+
+    <p class="call__note" data-reveal>Keikat, levy-yhtiöt, haastattelut. Vastaamme kaikkeen, hitaasti.</p>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <!-- ═══ PLACEHOLDER — swap in the band's real profiles ═══ -->
+  <ul class="colophon__links">
+    <li><a href="#" rel="me noopener">Bandcamp</a></li>
+    <li><a href="#" rel="me noopener">Spotify</a></li>
+    <li><a href="#" rel="me noopener">Instagram</a></li>
+    <li><a href="#" rel="me noopener">YouTube</a></li>
+  </ul>
+  <p class="colophon__meta"><span>Kironpunoja</span><span>Tampere, Suomi</span><span>&copy; <span id="vuosi">2026</span></span></p>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

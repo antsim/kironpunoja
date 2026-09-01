@@ -1,0 +1,10 @@
+<!--
+  PLACEHOLDER LOGO — replace this whole file with the band's real SVG logo.
+  Keep `fill="currentColor"` and no hard-coded width/height so the site can
+  scale and colour it. See README.md → "Dropping in the logo".
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 150" role="img" aria-label="Kironpunoja">
+  <text x="600" y="115" text-anchor="middle" fill="currentColor"
+        font-family="Bodoni Moda, Didot, Times New Roman, serif"
+        font-weight="900" font-size="140" letter-spacing="-3">KIRONPUNOJA</text>
+</svg>
