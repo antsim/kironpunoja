@@ -104,7 +104,7 @@ a{ color:inherit; text-decoration:none; }
 
 
 /* ═══ MASTHEAD ════════════════════════════════════════════════════════
-   Hidden over the hero; slides in once the wordmark has scrolled away. */
+   Hidden over the hero; slides in once the logo has scrolled away. */
 .masthead{
   position:fixed; inset:0 0 auto 0; z-index:50;
   display:flex; align-items:center; justify-content:space-between;
@@ -172,12 +172,12 @@ a{ color:inherit; text-decoration:none; }
 
 
 /* ═══ HERO ════════════════════════════════════════════════════════════
-   Asymmetric: wordmark hangs left off a wide column, the statement sits
+   Asymmetric: the logo hangs left off a wide column, the statement sits
    bottom-right, the specimen tag rules the floor. Nothing is centred. */
 .hero{
   position:relative;
   min-height:100svh;
-  padding:calc(var(--gutter) + 3rem) var(--gutter) 1.75rem;
+  padding:var(--gutter) var(--gutter) 1.75rem;
   display:grid;
   grid-template-columns:repeat(12,1fr);
   grid-template-rows:1fr auto auto;
@@ -188,36 +188,42 @@ a{ color:inherit; text-decoration:none; }
 .hero__mark{
   grid-column:1 / 12;
   grid-row:1;
-  align-self:center;
-  margin-block:clamp(2rem,8vh,5rem) clamp(1.5rem,5vh,3rem);
+  align-self:end;
+  margin-block:0 clamp(1.5rem,4vh,3rem);
 }
 
-/* Live-text wordmark. Fallback until the band's SVG is dropped in. */
-.wordmark{
-  font-family:var(--display);
-  font-variation-settings:"opsz" 96;
-  font-weight:900;
-  /* Conservative no-JS fallback. main.js overrides this with a measured
-     size so the wordmark sits flush to its column on every viewport. */
-  font-size:clamp(2.4rem, 10vw, 11rem);
-  line-height:.82;
-  letter-spacing:-.025em;
-  text-transform:uppercase;
-  white-space:nowrap;
+/* ── The logo ─────────────────────────────────────────────────────────
+   The one loud object on an otherwise silent page. Capped by height as
+   well as width so it cannot swallow a short viewport: the cap is the
+   artwork's own aspect ratio (2645 / 1464), which keeps it sized by
+   geometry rather than by object-fit letterboxing. */
+.hero__logo{
+  width:min(100%, calc(52svh * 1.8067));
+  margin:0;
 }
-/* Per-character rise. Set up in main.js. */
-.wordmark .unit{ transition-duration:1.25s; }
-
-/* Styles the dropped-in SVG logo, if one is used instead. */
-.hero__mark .logo{ width:min(100%, 78rem); color:var(--bone); }
-.hero__mark .logo svg{ width:100%; height:auto; }
+.hero__logo img{
+  width:100%;
+  height:auto;
+  /* The artwork is bone-toned on transparency; nothing to tint. */
+}
+/* Slower and gentler than the copy reveals — it should surface, not snap. */
+.js .hero__logo[data-reveal]{
+  transform:scale(.985);
+  transition:opacity 1.6s var(--ease), transform 1.6s var(--ease);
+}
+.js .hero__logo[data-reveal].is-in{ transform:none; }
 
 .hero__say{
   grid-column:6 / 13;
   grid-row:2;
-  margin-bottom:clamp(3rem,9vh,6.5rem);
+  margin-bottom:clamp(2rem,5vh,3.5rem);
 }
-@media (max-width:900px){ .hero__say{ grid-column:1 / 13; } }
+@media (max-width:900px){
+  .hero__say{ grid-column:1 / 13; }
+  /* No room for a reserved column of air at this width — let the logo run
+     the full measure. */
+  .hero__mark{ grid-column:1 / 13; }
+}
 
 .hero__lede{
   font-family:var(--display);

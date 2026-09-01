@@ -38,21 +38,34 @@ The accent is deliberately rationed: the "Aktiivinen" status dot, the
 manifesto numerals on hover, the ticker separators, and the booking
 address on hover. Adding a fifth use will cheapen the other four.
 
-## Dropping in the logo
+## The logo
 
-Two options, both already styled.
+`kironpunoja-logo.svg` in the repo root is the **source** artwork and is not
+served to browsers: it is 7.9 MB of auto-traced paths (13,341 of them,
+7,006 distinct fills) describing what is really a continuous-tone image.
+Inlining it would stall rendering.
 
-**Inline (preferred — it inherits colour and stays crisp):** open
-`index.html`, find the `LOGO SLOT` comment in the hero, paste the `<svg>`
-inside a `<div class="logo">`, and delete the `<h1 class="wordmark">`
-fallback. Give the SVG `fill="currentColor"` and strip any fixed
-`width`/`height`.
+What the page loads is `assets/logo-{900,1400,2048}.webp`, derived from it:
 
-**As a file:** overwrite `assets/logo.svg` and reference it with
-`<img class="logo" src="assets/logo.svg" alt="Kironpunoja">`.
+1. rendered at native 2816x1536,
+2. background knocked out by ramping alpha across a narrow luminance band
+   (transparent below ~8, opaque above ~30) so the baked-in black plate
+   disappears while every toned pixel keeps its **original** colour — the
+   artwork is bone-toned already and needs no tint,
+3. auto-cropped to the artwork bounding box (2645x1464, aspect 1.8067),
+4. scaled to three widths and encoded as WebP (181/299/391 KB), served via
+   `srcset`.
 
-Until then the hero renders the wordmark as live text, which animates and
-is readable by search engines.
+Alpha is deliberately *not* premultiplied by luminance: that would darken
+the artwork as it composited over the ink ground.
+
+To regenerate after changing the source, redo those steps and keep the
+`width`/`height` attributes on the `<img>` in sync with the crop, or the
+hero will shift as it loads.
+
+The hero caps the logo by height as well as width, using the artwork's own
+aspect ratio, so it cannot push the specimen tag below the fold on a short
+viewport.
 
 ## Placeholder copy
 

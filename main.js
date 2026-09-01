@@ -82,49 +82,7 @@
   }
 
 
-  /* ── Fit the text wordmark flush to its column ─────────────────────
-     A vw-derived font-size can only ever guess at the width of eleven
-     glyphs in a given face. Measure instead, so the wordmark hits the
-     column edge exactly — at any viewport, in any fallback font.        */
-  var wordmark = document.querySelector('.wordmark');
-
-  function fitWordmark() {
-    if (!wordmark) return;
-    var avail = wordmark.parentElement.clientWidth;
-    if (!avail) return;
-
-    var PROBE = 100;
-
-    /* Measure shrink-to-fit. `scrollWidth` on a block element does not
-       report overflowing white-space:nowrap inline content, so the element
-       has to be inline-block for the duration of the measurement. */
-    var prevDisplay = wordmark.style.display;
-    wordmark.style.fontSize = PROBE + 'px';
-    wordmark.style.display = 'inline-block';
-    var natural = wordmark.offsetWidth;
-    wordmark.style.display = prevDisplay;
-
-    if (!natural) { wordmark.style.fontSize = ''; return; }
-
-    wordmark.style.fontSize = (PROBE * avail / natural) * 0.995 + 'px';
-  }
-
-  if (wordmark) {
-    fitWordmark();
-    /* Re-fit once the real face lands — Bodoni's metrics are nothing like
-       the fallback serif's. */
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(fitWordmark);
-    }
-    var t;
-    window.addEventListener('resize', function () {
-      clearTimeout(t);
-      t = setTimeout(fitWordmark, 120);
-    }, { passive: true });
-  }
-
-
-  /* ── Masthead: appears only once the hero wordmark is gone ────────── */
+  /* ── Masthead: appears only once the hero logo is gone ────────── */
   var masthead = document.getElementById('masthead');
   var hero = document.querySelector('.hero');
 

@@ -14,7 +14,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700;6..96,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');</script>
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -37,20 +37,16 @@
 <main id="top">
 
   <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
-  <section class="hero" aria-labelledby="wordmark">
+  <section class="hero" aria-labelledby="hero-logo">
 
     <div class="hero__mark">
-      <!--
-        LOGO SLOT
-        ─────────
-        Paste the band's SVG logo directly inside the <div class="logo"> below,
-        then delete the <h1 class="wordmark"> element.
-        The SVG should have  fill="currentColor"  and no fixed width/height —
-        styles.css already scales it and inherits the bone colour.
-
-        <div class="logo"> …your <svg> here… </div>
-      -->
-      <h1 class="wordmark" id="wordmark" data-split="chars">Kironpunoja</h1>
+      <h1 class="hero__logo" id="hero-logo" data-reveal>
+        <img src="assets/logo-1400.webp"
+             srcset="assets/logo-900.webp 900w, assets/logo-1400.webp 1400w, assets/logo-2048.webp 2048w"
+             sizes="(max-width: 900px) 92vw, 66vw"
+             width="2645" height="1464"
+             alt="Kironpunoja" fetchpriority="high" decoding="async">
+      </h1>
     </div>
 
     <div class="hero__say">
