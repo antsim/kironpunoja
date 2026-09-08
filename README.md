@@ -67,6 +67,30 @@ The hero caps the logo by height as well as width, using the artwork's own
 aspect ratio, so it cannot push the specimen tag below the fold on a short
 viewport.
 
+## The holding page
+
+`coming-soon.html` is a standalone page, independent of `index.html` — its
+own CSS and JS, sharing only the palette, the two typefaces and the grain.
+Serve it as the site root while the main page is unfinished (rename it to
+`index.html`, or point the host's default document at it) and swap back
+when the full site goes live. It carries `noindex`, so remember to drop
+that when it becomes the public landing page.
+
+The animation: the mark smoulders. An ember field drifts upward behind the
+logo, clipped to the silhouette by a CSS mask over `assets/logo-mark.svg`,
+so it is only ever visible inside the thorns; a few embers drift up the
+open page around it.
+
+That field is painted on a 200x110 offscreen canvas and scaled up — the
+browser's own filtering does the blurring, so it costs about twenty
+gradients a frame rather than hundreds at full resolution. The loop skips
+work entirely while the tab is hidden, and `prefers-reduced-motion`
+renders exactly one frame and then stops.
+
+`assets/logo-mark.svg` is the white silhouette with its C2PA metadata
+stripped (74 KB gzipped). It is white-on-transparent, so its alpha doubles
+as the mask with no extra work.
+
 ## Placeholder copy
 
 Every invented string is wrapped in a `PLACEHOLDER` comment in
